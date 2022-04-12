@@ -1,14 +1,10 @@
 package com.practica.ibm.clients.security;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practica.ibm.clients.models.Account;
 import com.practica.ibm.clients.repositories.AccountRepository;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -70,7 +66,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
 
         String email = validatedToken.get("email").textValue();
-        Optional<Account> accountOptional = accountRepository.getAccountByEmail("irina");
+        Optional<Account> accountOptional = accountRepository.getAccountByEmail(email);
         if (!accountOptional.isPresent()) {
             System.out.println("email '" + email + "' not found");
             response.setStatus(HttpStatus.BAD_REQUEST.value());
